@@ -1,4 +1,6 @@
 import re
+import random
+import string
 
 def check_password(password):
     score = 0
@@ -47,5 +49,43 @@ def check_password(password):
     else:
         print("\n🎉 Excellent password!")
 
-password = input("Enter a password to test: ")
-check_password(password)
+def generate_password(length):
+    characters = (
+        string.ascii_letters +
+        string.digits +
+        string.punctuation
+    )
+
+    password = ''.join(random.choice(characters) for _ in range(length))
+
+    print("\n===== Generated Password =====")
+    print(password)
+
+while True:
+    print("\n========== Password Toolkit ==========")
+    print("1. Check Password Strength")
+    print("2. Generate Password")
+    print("3. Exit")
+
+    choice = input("\nChoose an option: ")
+
+    if choice == "1":
+        password = input("Enter a password: ")
+        check_password(password)
+
+    elif choice == "2":
+        try:
+            length = int(input("Password length: "))
+            if length < 8:
+                print("Password length should be at least 8.")
+            else:
+                generate_password(length)
+        except ValueError:
+            print("Please enter a valid number.")
+
+    elif choice == "3":
+        print("Goodbye!")
+        break
+
+    else:
+        print("Invalid option.")
